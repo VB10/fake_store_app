@@ -85,23 +85,27 @@ class _HomeViewState extends State<HomeView> {
                 state.selectItems.isNotNullOrEmpty && index == state.selectItems!.length - 1
                     ? const LoadingCenter()
                     : const SizedBox.shrink(),
-                TextButton(
-                    onPressed: () {
-                      context.read<HomeCubit>().updateList(index, state.selectItems?[index]);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('${state.selectItems?[index].price ?? kZero}'),
-                        Icon(Icons.add),
-                      ],
-                    )),
+                _dummyPlus(context, index, state),
               ],
             );
           },
         );
       },
     );
+  }
+
+  TextButton _dummyPlus(BuildContext context, int index, HomeState state) {
+    return TextButton(
+        onPressed: () {
+          context.read<HomeCubit>().updateList(index, state.selectItems?[index]);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('${state.selectItems?[index].price ?? kZero}'),
+            const Icon(Icons.add),
+          ],
+        ));
   }
 
   Widget _loadingCenter() {
